@@ -54,7 +54,7 @@ export async function getCities(): Promise<City[] | null> {
       console.warn('error');
     });
 
-  return cities?.data?.cities || null;
+  return cities?.data?.cities.filter((x) => ['msk', 'spb'].indexOf(x?.abbreviation) === -1) || null;
 }
 
 export async function getCity(cityId: string): Promise<City | null> {
