@@ -1,0 +1,1 @@
+export { SimilarCard } from './SimilarCard';

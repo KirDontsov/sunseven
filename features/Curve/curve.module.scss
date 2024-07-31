@@ -1,0 +1,27 @@
+.curve {
+  position: relative;
+  .slide,
+  .background {
+    position: fixed;
+    height: calc(100vh + 600px);
+    width: 100vw;
+    pointer-events: none;
+    left: 0;
+    top: 0;
+    z-index: 40;
+  }
+  .background {
+    background-color: black;
+    transition: opacity 0s linear 0.1s;
+  }
+  .route {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    color: white;
+    z-index: 41;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+  }
+}

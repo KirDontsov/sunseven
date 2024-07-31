@@ -1,0 +1,1 @@
+export { SearchVariants } from './SearchVariants';
