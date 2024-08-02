@@ -1,5 +1,5 @@
 import { Firm, ImageType } from '@/api';
-import { COMMON_DOMAIN, COMMON_HOST } from '@/shared';
+import { COMMON_DOMAIN } from '@/shared';
 import { Metadata } from 'next';
 import { ArticlePage } from './ArticlePage';
 import { getCategories, getCities, getFirm, getImages, getPageByUrl } from '@/app/api';
@@ -31,12 +31,12 @@ export async function generateMetadata({ params }: ArticleMetaProps): Promise<Me
   return {
     title: `${title}`,
     description: `${description}`,
-    alternates: { canonical: `${COMMON_HOST}/blog/${url}` },
+    alternates: { canonical: `https://топвыбор.рф/blog/${url}` },
     keywords: ['отзывы', ' рейтинг'],
     openGraph: {
       title: `${title}`,
       description: `${description}`,
-      url: `${COMMON_HOST}/blog/${url}`,
+      url: `https://топвыбор.рф/blog/${url}`,
       siteName: `${COMMON_DOMAIN}`,
       locale: 'ru_RU',
       type: 'website',

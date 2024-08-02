@@ -1,5 +1,5 @@
 'use client';
-import { $firmsCount, $firmsPage, Category, City, Firm, setFirmsPageEvt } from '@/api';
+import { $firmsCount, $firmsPage, Category, City, Firm, OaiReview, setFirmsPageEvt } from '@/api';
 import {
   CategoriesGateProvider,
   CategoryIdGateProvider,
@@ -24,6 +24,7 @@ export interface FirmsPageProps {
   city: City | null;
   firms: Firm[] | null;
   firmsForMap: Firm[] | null;
+  oai_reviews: OaiReview[] | null;
 }
 
 export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
@@ -35,6 +36,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
   firms,
   firmsForMap,
   city,
+  oai_reviews,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -73,7 +75,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                       />
                     </div>
                     {firms?.length ? (
-                      <FirmsList firms={firms} city={city} category={category} />
+                      <FirmsList firms={firms} city={city} category={category} oai_reviews={oai_reviews} />
                     ) : (
                       <SectionHeader title="Что-то пошло не так" subTitle="Нет компаний в данном разделе" />
                     )}

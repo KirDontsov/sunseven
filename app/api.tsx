@@ -8,6 +8,7 @@ import {
   FirmQueryResult,
   ImagesQueryResult,
   OaiDescriptionQueryResult,
+  OaiReview,
   OaiReviewsQueryResult,
   Page,
   PageItem,
@@ -41,7 +42,7 @@ export async function getCategories(page: number, limit: number): Promise<Catego
       console.warn('error');
     });
 
-  return categories?.data?.categories || null;
+  return categories?.data?.categories?.filter((x) => x?.is_active === 'true') || null;
 }
 
 export async function getCities(): Promise<City[] | null> {
@@ -54,7 +55,7 @@ export async function getCities(): Promise<City[] | null> {
       console.warn('error');
     });
 
-  return cities?.data?.cities.filter((x) => ['msk', 'spb'].indexOf(x?.abbreviation) === -1) || null;
+  return cities?.data?.cities?.filter((x) => x?.is_active === 'true') || null;
 }
 
 export async function getCity(cityId: string): Promise<City | null> {
@@ -157,14 +158,11 @@ export async function getReviews(firmUrl: string, page: string, limit: number) {
   return reviews?.data?.reviews || null;
 }
 
-export async function getOaiReviews(firmUrl: string, page: string, limit: number) {
-  const oai_reviews: OaiReviewsQueryResult = await fetch(
-    `${BACKEND_PORT}/api/oai_reviews_by_url/${firmUrl}?page=${page}&limit=${limit}`,
-    {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'GET',
-    },
-  )
+export async function getOaiReviews(firmUrl: string) {
+  const oai_reviews: OaiReviewsQueryResult = await fetch(`${BACKEND_PORT}/api/oai_reviews_by_url/${firmUrl}`, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET',
+  })
     .then((res) => res.json())
     .catch(() => {
       console.warn('error getReviews');
@@ -215,7 +213,11 @@ export async function getSimilarFirmsImages(firmUrls: string[]): Promise<ImagesQ
       fetch(`${BACKEND_PORT}/api/images_by_url/${url}`, {
         headers: { 'Content-Type': 'application/json' },
         method: 'GET',
-      }).then((res) => res.json()),
+      })
+        .then((res) => res.json())
+        .catch(() => {
+          console.warn('error getSimilarFirmsImages');
+        }),
     );
   });
 
@@ -235,4 +237,29 @@ export async function getPageByUrl(pageUrl: string): Promise<Page | null> {
     });
 
   return firm?.data || null;
+}
+
+export async function getOaiReviewsForFirms(firms: Firm[] | null): Promise<OaiReview[] | null> {
+  if (!firms?.length) {
+    return null;
+  }
+
+  const requests: Promise<OaiReviewsQueryResult>[] = [];
+
+  firms.forEach(({ url }: Firm) => {
+    requests.push(
+      fetch(`${BACKEND_PORT}/api/oai_reviews_by_url/${url}`, {
+        headers: { 'Content-Type': 'application/json' },
+        method: 'GET',
+      })
+        .then((res) => res.json())
+        .catch(() => {
+          console.warn('error getOaiReviewsForFirms');
+        }),
+    );
+  });
+
+  const oai_reviews = await Promise.all(requests);
+
+  return oai_reviews.map((x) => x?.data?.oai_reviews).flat() || null;
 }

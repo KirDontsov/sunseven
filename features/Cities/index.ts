@@ -1,3 +1,4 @@
-export { CitiesGateProvider } from './CitiesGateProvider';
-export { CityIdGateProvider } from './CityIdGateProvider';
 export { Cities } from './Cities';
+export { CitiesGateProvider } from './CitiesGateProvider';
+export { CitiesList } from './CitiesList';
+export { CityIdGateProvider } from './CityIdGateProvider';

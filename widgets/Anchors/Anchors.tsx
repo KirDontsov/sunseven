@@ -42,14 +42,15 @@ export const Anchors = () => {
   }, []);
 
   return (
-    <div className="text-sm xl:text-base font-medium text-center border-b text-eboni-400 border-eboni-200 dark:text-white">
+    <div className="text-sm xl:text-base font-medium text-center border-b text-eboni-400 border-eboni-200 dark:text-white dark:border-negroni-400">
       <ul className="flex flex-wrap -mb-px">
         {ANCHORS.map(({ id, title }, index) => (
           <li key={id} className="me-2">
             <a
               href={`#${id}`}
               className={cn('inline-block p-4 border-b border-transparent rounded-t-lg hover:text-negroni-400', {
-                'text-negroni-400 border-negroni-400 active': hash === id || (hash === '' && index === 0),
+                'text-eboni-400 border-negroni-400 active bg-eboni-800 dark:bg-negroni-400 hover:text-eboni-700':
+                  hash === id || (hash === '' && index === 0),
               })}
               aria-current="page"
             >

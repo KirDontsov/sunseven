@@ -1,5 +1,13 @@
-import { getCategories, getCategory, getCities, getCity, getFirms, getFirmsForMap } from '@/app/api';
-import { COMMON_DOMAIN, COMMON_HOST, COMMON_TITLE } from '@/shared';
+import {
+  getCategories,
+  getCategory,
+  getCities,
+  getCity,
+  getFirms,
+  getFirmsForMap,
+  getOaiReviewsForFirms,
+} from '@/app/api';
+import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { notFound } from 'next/navigation';
 import { Metadata, ResolvingMetadata } from 'next/types';
 import { FirmsPage } from './FirmsPage';
@@ -25,12 +33,12 @@ export async function generateMetadata({ params }: CategoryMetaProps, parent: Re
   return {
     title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - ${COMMON_TITLE}`,
     description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
-    alternates: { canonical: `${COMMON_HOST}/${params.cityId}/${category?.abbreviation}` },
+    alternates: { canonical: `https://топвыбор.рф/${params.cityId}/${category?.abbreviation}` },
     keywords: [`${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
     openGraph: {
       title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - ${COMMON_TITLE}`,
       description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
-      url: `${COMMON_HOST}/${params.cityId}/${category?.abbreviation}`,
+      url: `https://топвыбор.рф/${params.cityId}/${category?.abbreviation}`,
       siteName: `${COMMON_DOMAIN}`,
       locale: 'ru_RU',
       type: 'website',
@@ -54,6 +62,7 @@ export default async function Page({ params, searchParams }: CategoryPageProps) 
   }
   const firmsForMap = await getFirmsForMap(cityAbbr, categoryAbbr);
   const city = await getCity(cityAbbr);
+  const oai_reviews = await getOaiReviewsForFirms(firms);
 
   return (
     <FirmsPage
@@ -65,6 +74,7 @@ export default async function Page({ params, searchParams }: CategoryPageProps) 
       categories={categories}
       city={city}
       category={category}
+      oai_reviews={oai_reviews}
     />
   );
 }

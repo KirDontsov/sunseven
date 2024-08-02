@@ -1,8 +1,8 @@
-import { getCategories, getCities, getCity } from '@/app/api';
-import { COMMON_DOMAIN, COMMON_HOST, COMMON_TITLE } from '@/shared';
+import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CategoriesPage } from './CategoriesPage';
+import { getCategories, getCities, getCity } from '@/app/api';
 
 export interface CityPageProps {
   params: {
@@ -23,12 +23,12 @@ export async function generateMetadata({ params }: CityIdProps): Promise<Metadat
   return {
     title: `Лучшие компании города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы — ${COMMON_TITLE}`,
     description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
-    alternates: { canonical: `${COMMON_HOST}${city?.abbreviation}` },
+    alternates: { canonical: `https://топвыбор.рф${city?.abbreviation}` },
     keywords: ['отзывы', ' рейтинг', ' рестораны', ' салоны красоты', ' автосервисы', ' медицина', ` ${cityName}`],
     openGraph: {
       title: `Лучшие компании города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы — ${COMMON_TITLE}`,
       description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
-      url: `${COMMON_HOST}${city?.abbreviation}`,
+      url: `https://топвыбор.рф${city?.abbreviation}`,
       siteName: `${COMMON_DOMAIN}`,
       locale: 'ru_RU',
       type: 'website',

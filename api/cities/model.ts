@@ -8,6 +8,7 @@ export const DEFAULT_DROPDOWN_VALUE = {
   name: 'Выберите город',
   abbreviation: 'Выберите город',
   coords: null,
+  is_active: 'false',
 };
 
 export interface City {
@@ -15,6 +16,7 @@ export interface City {
   name: string;
   abbreviation: string;
   coords: string | null;
+  is_active: string;
 }
 
 export interface CitiesQueryResult {

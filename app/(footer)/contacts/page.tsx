@@ -1,7 +1,7 @@
+import { getCategories, getCities } from '@/app/api';
 import { COMMON_DOMAIN, COMMON_HOST, COMMON_TITLE } from '@/shared';
 import { Metadata } from 'next';
 import { ContactsPage } from './ContactsPage';
-import { getCategories, getCities } from '@/app/api';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

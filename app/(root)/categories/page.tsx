@@ -1,6 +1,6 @@
-import { getCategories, getCities, getCity } from '@/app/api';
 import { notFound } from 'next/navigation';
 import { CategoriesPage } from './CategoriesPage';
+import { getCategories, getCities, getCity } from '@/app/api';
 
 export interface CityPageProps {
   params: {

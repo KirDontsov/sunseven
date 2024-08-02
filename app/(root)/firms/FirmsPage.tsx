@@ -1,5 +1,5 @@
 'use client';
-import { $firmsCount, $firmsPage, Category, City, Firm, setFirmsPageEvt } from '@/api';
+import { $firmsCount, $firmsPage, Category, City, Firm, OaiReview, setFirmsPageEvt } from '@/api';
 import {
   CategoriesGateProvider,
   CategoryIdGateProvider,
@@ -23,6 +23,7 @@ export interface FirmsPageProps {
   firmsForMap: Firm[] | null;
   category: Category | null;
   city: City | null;
+  oai_reviews: OaiReview[] | null;
 }
 
 export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
@@ -34,6 +35,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
   city,
   category,
   firmsForMap,
+  oai_reviews,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -68,7 +70,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                     <div className="flex flex-col gap-2 bg-white dark:bg-eboni-900 xl:h-[100svh] xl:overflow-y-auto pt-[96px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit">
                       <CommonHeader title="Компании" subTitle="раздел" />
                       {firmsCount ? (
-                        <FirmsList firms={firms} city={city} category={category} />
+                        <FirmsList firms={firms} city={city} category={category} oai_reviews={oai_reviews} />
                       ) : (
                         <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />
                       )}

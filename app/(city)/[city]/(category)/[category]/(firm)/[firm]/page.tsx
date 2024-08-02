@@ -12,7 +12,7 @@ import {
   getReviews,
   getSimilarFirmsImages,
 } from '@/app/api';
-import { COMMON_DOMAIN, COMMON_HOST, COMMON_TITLE } from '@/shared';
+import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { notFound } from 'next/navigation';
 import { Metadata, ResolvingMetadata } from 'next/types';
 import { FirmIdPage } from './FirmIdPage';
@@ -51,13 +51,13 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
     title: `${categoryName?.slice(0, -1)} ${firmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
     description: `${categoryName?.slice(0, -1)} ${firmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${categoryName?.slice(0, -1)}ов города ${cityName}, соседние и похожие ${categoryName?.slice(0, -1)}ы на ${COMMON_DOMAIN}`,
     alternates: {
-      canonical: `${COMMON_HOST}/${params.city}/${category?.abbreviation}/${firmUrl}`,
+      canonical: `https://топвыбор.рф/${params.city}/${category?.abbreviation}/${firmUrl}`,
     },
     keywords: [`${firmName}`, ` ${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
     openGraph: {
       title: `${categoryName?.slice(0, -1)} ${firmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
       description: `${categoryName?.slice(0, -1)} ${firmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${categoryName?.slice(0, -1)}ов города ${cityName}, соседние и похожие ${categoryName?.slice(0, -1)}ы на ${COMMON_DOMAIN}`,
-      url: `${COMMON_HOST}/${params.city}/${category?.abbreviation}/${firmUrl}`,
+      url: `https://топвыбор.рф/${params.city}/${category?.abbreviation}/${firmUrl}`,
       siteName: `${COMMON_DOMAIN}`,
       locale: 'ru_RU',
       type: 'website',
@@ -84,7 +84,7 @@ export default async function Page({ params, searchParams }: FirmPageProps) {
   const images = await getImages(firmUrl);
   const reviews = await getReviews(firmUrl, reviewsPage, 10);
   const oai_description = await getOaiDescription(firmUrl);
-  const oai_reviews = await getOaiReviews(firmUrl, reviewsPage, 10);
+  const oai_reviews = await getOaiReviews(firmUrl);
   const prices = await getPrices(firmUrl);
   const firms = await getFirms(cityAbbr, categoryAbbr, firmsPage, 10);
   const similarFirmsImages = await getSimilarFirmsImages(firms?.map(({ url }) => url) ?? []);
